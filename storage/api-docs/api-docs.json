@@ -1,0 +1,563 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Blog Project API",
+        "description": "API documentation for the blog system.",
+        "contact": {
+            "email": "farzane.rahmani2@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user and return access token",
+                "operationId": "da8643013c2941f5ed7f8a9c9b4a7f7a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "mobile",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "farzane"
+                                    },
+                                    "mobile": {
+                                        "type": "string",
+                                        "example": "09197224527"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 27
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "farzane"
+                                                        },
+                                                        "mobile": {
+                                                            "type": "string",
+                                                            "example": "09197224527"
+                                                        },
+                                                        "profile_image": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 17:15:55"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user and return access token",
+                "operationId": "535ffeda4b78916efd658b2844ea897a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "mobile",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "mobile": {
+                                        "type": "string",
+                                        "example": "09197224527"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                },
+                                                "token_type": {
+                                                    "type": "string",
+                                                    "example": "bearer"
+                                                },
+                                                "expires_in": {
+                                                    "type": "integer",
+                                                    "example": 3600
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 16:20:55"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get authenticated user's posts",
+                "operationId": "fb84b8ac53d4f3c7be8b9d99ccdfaaf4",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Hello world"
+                                                    },
+                                                    "body": {
+                                                        "type": "string",
+                                                        "example": "Lorem Ipsum is simply dummy text of the printing and typesetting industry..."
+                                                    },
+                                                    "views_count": {
+                                                        "type": "integer",
+                                                        "example": 10
+                                                    },
+                                                    "author": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Sara"
+                                                            },
+                                                            "profile_image": {
+                                                                "type": "string",
+                                                                "example": "http://localhost/storage/profile/sara.jpg",
+                                                                "nullable": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 12:34:00"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get a single post by ID",
+                "operationId": "b76e6fb47b679ab1136d8a0a5101ac9f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Post ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post found successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Qui qui ea dolores sint."
+                                                },
+                                                "body": {
+                                                    "type": "string",
+                                                    "example": "Labore et hic dolorum..."
+                                                },
+                                                "views_count": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "author": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Tara Pagac"
+                                                        },
+                                                        "profile_image": {
+                                                            "type": "string",
+                                                            "example": "http://localhost:8000/storage/profile_images/ukzz2WRY2zouwJd72zFJJzLNBoLyww1jKDkxawll.jpg",
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 16:35:01"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/image": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Upload user's profile image",
+                "operationId": "3c26c51013a0c61a85adea32a30d8e6d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "Image file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Profile image updated successfully."
+                                                },
+                                                "profile_image_url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost:8000/storage/profile_images/vl05yIorRvteG9ROPKBkYlbfP5vP851c0nwuF3hf.jpg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 16:51:01"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/rankings": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get list of top ranked users by total post views",
+                "operationId": "09bb9de4d4cb6c8983077bc4c14435b4",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with ranked users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "users": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Tara Pagac"
+                                                            },
+                                                            "profile_image": {
+                                                                "type": "string",
+                                                                "example": "http://localhost:8000/storage/profile_images/ukzz2WRY2zouwJd72zFJJzLNBoLyww1jKDkxawll.jpg"
+                                                            },
+                                                            "total_views": {
+                                                                "type": "integer",
+                                                                "example": 4
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 17:31:01"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected server error"
+                    }
+                }
+            }
+        },
+        "/api/profile/me": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get the currently authenticated user's profile",
+                "operationId": "a0825aa0966fdc2d7c3fe0ea9ad215b7",
+                "responses": {
+                    "200": {
+                        "description": "User profile retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 26
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "farzane"
+                                                    },
+                                                    "mobile": {
+                                                        "type": "string",
+                                                        "example": "09197224528"
+                                                    },
+                                                    "profile_image": {
+                                                        "type": "string",
+                                                        "example": "http://localhost:8000/storage/profile_images/ZbApL64uXQ5LNkhqA9C3ZIyQwmVTn2EAe5KMKafy.jpg"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "server_time": {
+                                            "type": "string",
+                                            "example": "2025-05-24 17:18:46"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Posts",
+            "description": "Posts"
+        },
+        {
+            "name": "Profile",
+            "description": "Profile"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        }
+    ]
+}
