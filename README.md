@@ -29,7 +29,7 @@ This is a Dockerized Laravel 12 REST API for a simple blogging system
 ### 1️⃣ Clone the project
 
 ```bash
-git clone https://github.com/your-username/blog-project.git
+git clone https://github.com/farzane94/blog-project.git
 cd blog-project
 
 ## 2️⃣ Start the Docker containers
